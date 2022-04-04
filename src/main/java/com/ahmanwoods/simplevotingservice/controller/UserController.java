@@ -4,6 +4,8 @@ import com.ahmanwoods.simplevotingservice.apierror.ApiError;
 import com.ahmanwoods.simplevotingservice.entity.UserEntity;
 import com.ahmanwoods.simplevotingservice.exception.UsernameInUseException;
 import com.ahmanwoods.simplevotingservice.forms.AddUserForm;
+import com.ahmanwoods.simplevotingservice.forms.DeleteUserForm;
+import com.ahmanwoods.simplevotingservice.forms.UpdateUserForm;
 import com.ahmanwoods.simplevotingservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,15 +25,19 @@ public class UserController {
     @RequestMapping(method=RequestMethod.POST, value="/add")
     public ResponseEntity<Void> addUser(@RequestBody AddUserForm addUserForm) {
         UserEntity createdUser = userService.addUser(addUserForm.getUsername());
+        return new ResponseEntity<Void>(HttpStatus.CREATED);
+    }
 
-        if (createdUser == null)
-        {
-            return ResponseEntity.notFound().build();
-        }
-        else
-        {
-            return new ResponseEntity<Void>(HttpStatus.CREATED);
-        }
+    @RequestMapping(method=RequestMethod.DELETE, value="/delete")
+    public ResponseEntity<Void> deleteUser(@RequestBody DeleteUserForm deleteUserForm) {
+        UserEntity deletedUser = userService.deleteUser(deleteUserForm.getUsername());
+        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+    }
+
+    @RequestMapping(method=RequestMethod.PUT, value="/update")
+    public ResponseEntity<Void> updateUser(@RequestBody UpdateUserForm updateUserForm) {
+        UserEntity updatedUser = userService.updateUser(updateUserForm.getUsername(), updateUserForm.getNewUsername());
+        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
     }
 
 }
