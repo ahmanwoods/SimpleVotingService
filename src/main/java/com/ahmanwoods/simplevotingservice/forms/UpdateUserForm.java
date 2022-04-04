@@ -2,19 +2,14 @@ package com.ahmanwoods.simplevotingservice.forms;
 
 import org.hibernate.sql.Update;
 
+import javax.validation.constraints.NotBlank;
+
+
 public class UpdateUserForm {
-
+    @NotBlank(message="Username cannot be empty")
     private String username;
+    @NotBlank(message="New username cannot be empty")
     private String newUsername;
-
-    public UpdateUserForm() {
-
-    }
-
-    public UpdateUserForm(String username, String newUsername) {
-        this.username = username;
-        this.newUsername = newUsername;
-    }
 
     public String getUsername() {
         return username;

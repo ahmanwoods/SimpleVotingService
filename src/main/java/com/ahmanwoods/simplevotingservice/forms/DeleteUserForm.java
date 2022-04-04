@@ -1,16 +1,11 @@
 package com.ahmanwoods.simplevotingservice.forms;
 
+
+import javax.validation.constraints.NotBlank;
+
 public class DeleteUserForm {
-
+    @NotBlank(message="Username cannot be empty")
     private String username;
-
-    public DeleteUserForm() {
-
-    }
-
-    public DeleteUserForm(String username) {
-        this.username = username;
-    }
 
     public String getUsername() {
         return username;
