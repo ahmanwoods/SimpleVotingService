@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -35,6 +37,28 @@ public class UserService {
         }
 
         userRepository.save(user);
+        return user;
+    }
+
+    @Transactional(noRollbackFor = EntityNotFoundException.class)
+    public UserEntity getUser(String userId) throws ResourceInUseException {
+        Optional<UserEntity> user = userRepository.findById(userId);
+        if (user.isEmpty())
+        {
+            throw new EntityNotFoundException();
+        }
+
+        return user.get();
+    }
+
+    @Transactional(noRollbackFor = ResourceInUseException.class)
+    public UserEntity loginUser(String username) throws EntityNotFoundException {
+        UserEntity user = userRepository.findByUsername((username));
+        if (user == null)
+        {
+            throw new EntityNotFoundException();
+        }
+
         return user;
     }
 

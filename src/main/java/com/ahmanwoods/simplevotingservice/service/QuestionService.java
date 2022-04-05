@@ -26,6 +26,8 @@ public class QuestionService {
     private QuestionRepository questionRepository;
     @Autowired
     private VoteService voteService;
+    @Autowired
+    private UserService userService;
     private final static Pattern UUID_REGEX = Pattern.compile("^[{]?[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}[}]?$");
 
 
@@ -70,17 +72,21 @@ public class QuestionService {
             question = Optional.ofNullable(questionRepository.findByQuestion(questionString));
         }
 
-        if (!question.isPresent())
+        if (question.isEmpty())
         {
             throw new EntityNotFoundException();
         }
 
-        QuestionEntity returnQuestion = question.get();
-        return returnQuestion;
+        return question.get();
     }
 
     @Transactional(noRollbackFor = EntityNotFoundException.class)
     public List<QuestionEntity> getUserUnanswered(String userId) throws EntityNotFoundException {
+        UserEntity user = userService.getUser(userId);
+        if (user == null)
+        {
+            throw new EntityNotFoundException();
+        }
         List<QuestionEntity> questions = Streamable.of(questionRepository.findAll()).toList();
         List<String> userVotes = voteService.getUserVotes(userId);
 
@@ -100,7 +106,7 @@ public class QuestionService {
             question = Optional.ofNullable(questionRepository.findByQuestion(questionString));
         }
 
-        if (!question.isPresent())
+        if (question.isEmpty())
         {
             throw new EntityNotFoundException();
         }
@@ -128,7 +134,7 @@ public class QuestionService {
             question = Optional.ofNullable(questionRepository.findByQuestion(questionString));
         }
 
-        if (!question.isPresent())
+        if (question.isEmpty())
         {
             throw new EntityNotFoundException();
         }
