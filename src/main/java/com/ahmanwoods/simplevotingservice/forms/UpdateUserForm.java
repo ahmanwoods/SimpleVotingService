@@ -1,7 +1,5 @@
 package com.ahmanwoods.simplevotingservice.forms;
 
-import org.hibernate.sql.Update;
-
 import javax.validation.constraints.NotBlank;
 
 

@@ -1,8 +1,6 @@
 package com.ahmanwoods.simplevotingservice.exception;
 
 import com.ahmanwoods.simplevotingservice.apierror.ApiError;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;

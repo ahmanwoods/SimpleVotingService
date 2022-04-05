@@ -3,7 +3,6 @@ package com.ahmanwoods.simplevotingservice.controller;
 import com.ahmanwoods.simplevotingservice.entity.VoteEntity;
 import com.ahmanwoods.simplevotingservice.forms.*;
 import com.ahmanwoods.simplevotingservice.service.VoteService;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller

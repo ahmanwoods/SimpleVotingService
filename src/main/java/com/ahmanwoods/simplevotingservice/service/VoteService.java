@@ -14,8 +14,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.springframework.core.io.buffer.DataBufferUtils.matcher;
-
 @Service
 public class VoteService {
 

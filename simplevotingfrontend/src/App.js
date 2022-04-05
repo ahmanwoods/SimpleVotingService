@@ -6,11 +6,8 @@ import {
   Routes,
   Route
  } from "react-router-dom";
-import Landing from "./components/Landing"
-import Home from "./components/Home"  
 import Login from "./components/Login"
-import QuestionList from "./components/QuestionList"
-import Logout from "./components/Logout"
+import Vote from "./components/Vote"
 import useUser from './components/useUser';
 
 export default function App() {
@@ -22,7 +19,7 @@ export default function App() {
       <div className="wrapper">
       <AppNavbar user={user} setUser={setUser}/>
       <Routes>
-          <Route path="/" element={<Login setUser={setUser} />}/>
+          <Route exact path="/" element={<Login setUser={setUser} />}/>
       </Routes>
       <Outlet />
     </div>     
@@ -33,7 +30,7 @@ export default function App() {
     <div className="wrapper">
       <AppNavbar user={user} setUser={setUser}/>
       <Routes>
-        <Route path="/" element={<QuestionList user={user} setUser={setUser}/>}>
+        <Route path="/" element={<Vote user={user} setUser={setUser}/>}>
         </Route>
       </Routes>
       <Outlet />

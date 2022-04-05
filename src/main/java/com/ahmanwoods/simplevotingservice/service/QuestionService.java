@@ -13,11 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
-
-import static org.springframework.core.io.buffer.DataBufferUtils.matcher;
 
 @Service
 public class QuestionService {
