@@ -13,8 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 import static org.springframework.core.io.buffer.DataBufferUtils.matcher;
 
@@ -23,6 +21,8 @@ public class VoteService {
 
     @Autowired
     private VoteRepository voteRepository;
+    @Autowired
+    private QuestionService questionService;
 
     @Transactional(noRollbackFor = ResourceInUseException.class)
     public VoteEntity addVote(String questionId, String userId, int voteValue) throws ResourceInUseException {
@@ -46,6 +46,7 @@ public class VoteService {
         voteRepository.save(vote);
         return vote;
     }
+
     @Transactional(noRollbackFor = EntityNotFoundException.class)
     public List<String> getUserVotes(String userId) throws EntityNotFoundException {
         return Streamable.of(voteRepository.findAllByUserId(userId))
@@ -53,9 +54,18 @@ public class VoteService {
     }
 
     @Transactional(noRollbackFor = EntityNotFoundException.class)
+    public int countQuestionVotesByVoteValue(String questionId, int voteValue) throws EntityNotFoundException {
+        if (questionService.getQuestion(questionId) == null) {
+            throw new EntityNotFoundException();
+        }
+
+        return voteRepository.countAllByQuestionIdAndVoteValue(questionId, voteValue);
+    }
+
+    @Transactional(noRollbackFor = EntityNotFoundException.class)
     public VoteEntity deleteVote(String voteId) throws EntityNotFoundException {
         Optional<VoteEntity> vote = voteRepository.findById(voteId);
-        if (!vote.isPresent())
+        if (vote.isEmpty())
         {
             throw new EntityNotFoundException();
         }
@@ -68,7 +78,7 @@ public class VoteService {
     @Transactional(noRollbackFor = EntityNotFoundException.class)
     public VoteEntity updateVote(String voteId, int voteValue) throws EntityNotFoundException, ResourceInUseException {
         Optional<VoteEntity> vote = voteRepository.findById(voteId);
-        if (!vote.isPresent())
+        if (vote.isEmpty())
         {
             throw new EntityNotFoundException();
         }

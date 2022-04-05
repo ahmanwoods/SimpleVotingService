@@ -29,16 +29,16 @@ public class QuestionController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @RequestMapping(method=RequestMethod.GET, value="/getUserUnanswered")
-    public ResponseEntity<List<QuestionEntity>> getUserUnanswered(@RequestParam String userId) {
-        List<QuestionEntity> questions = questionService.getUserUnanswered(userId);
-        return new ResponseEntity<>(questions, HttpStatus.OK);
-    }
-
     @RequestMapping(method=RequestMethod.GET, value="/get")
     public ResponseEntity<QuestionEntity> getQuestion(@Valid @RequestBody AddQuestionForm addQuestionForm) {
         QuestionEntity question = questionService.getQuestion(addQuestionForm.getQuestion());
         return new ResponseEntity<>(question, HttpStatus.OK);
+    }
+
+    @RequestMapping(method=RequestMethod.GET, value="/getUserUnanswered")
+    public ResponseEntity<List<QuestionEntity>> getUserUnanswered(@RequestParam String userId) {
+        List<QuestionEntity> questions = questionService.getUserUnanswered(userId);
+        return new ResponseEntity<>(questions, HttpStatus.OK);
     }
 
     @RequestMapping(method=RequestMethod.DELETE, value="/delete")
