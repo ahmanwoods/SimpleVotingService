@@ -24,9 +24,8 @@ public class UserService {
         UserEntity user = new UserEntity();
         user.setUsername(username);
 
-        if (userRepository.existsByUsername(username)) {
+        if (userRepository.existsByUsername(username))
             throw new ResourceInUseException();
-        }
 
         while (true) {
             generatedUUID = UUID.randomUUID().toString();
@@ -44,9 +43,7 @@ public class UserService {
     public UserEntity getUser(String userId) throws ResourceInUseException {
         Optional<UserEntity> user = userRepository.findById(userId);
         if (user.isEmpty())
-        {
             throw new EntityNotFoundException();
-        }
 
         return user.get();
     }
@@ -55,9 +52,7 @@ public class UserService {
     public UserEntity loginUser(String username) throws EntityNotFoundException {
         UserEntity user = userRepository.findByUsername((username));
         if (user == null)
-        {
             throw new EntityNotFoundException();
-        }
 
         return user;
     }
@@ -66,9 +61,7 @@ public class UserService {
     public UserEntity deleteUser(String username) throws EntityNotFoundException {
         UserEntity user = userRepository.findByUsername(username);
         if (user == null)
-        {
             throw new EntityNotFoundException();
-        }
 
         userRepository.delete(user);
         return user;
@@ -78,14 +71,10 @@ public class UserService {
     public UserEntity updateUser(String username, String newUsername) throws EntityNotFoundException, ResourceInUseException {
         UserEntity user = userRepository.findByUsername(username);
         if (user == null)
-        {
             throw new EntityNotFoundException();
-        }
 
         if (userRepository.existsByUsername(newUsername))
-        {
             throw new ResourceInUseException();
-        }
 
         user.setUsername(newUsername);
         userRepository.save(user);

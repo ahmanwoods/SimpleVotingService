@@ -10,9 +10,7 @@ public class UserEntity {
     private String id;
     private String username;
 
-    public UserEntity() {
-
-    }
+    public UserEntity() {}
 
     public UserEntity(String id, String username) {
         this.id = id;

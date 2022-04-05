@@ -28,9 +28,7 @@ public class VoteService {
         VoteEntity vote = new VoteEntity("", questionId, userId, voteValue);
 
         if (voteRepository.existsByQuestionIdAndUserId(questionId, userId))
-        {
             throw new ResourceInUseException();
-        }
 
         while (true) {
             generatedUUID = UUID.randomUUID().toString();
@@ -53,9 +51,8 @@ public class VoteService {
 
     @Transactional(noRollbackFor = EntityNotFoundException.class)
     public int countQuestionVotesByVoteValue(String questionId, int voteValue) throws EntityNotFoundException {
-        if (questionService.getQuestion(questionId) == null) {
+        if (questionService.getQuestion(questionId) == null)
             throw new EntityNotFoundException();
-        }
 
         return voteRepository.countAllByQuestionIdAndVoteValue(questionId, voteValue);
     }
@@ -64,9 +61,7 @@ public class VoteService {
     public VoteEntity deleteVote(String voteId) throws EntityNotFoundException {
         Optional<VoteEntity> vote = voteRepository.findById(voteId);
         if (vote.isEmpty())
-        {
             throw new EntityNotFoundException();
-        }
 
         VoteEntity returnVote = vote.get();
         voteRepository.delete(returnVote);
@@ -77,9 +72,7 @@ public class VoteService {
     public VoteEntity updateVote(String voteId, int voteValue) throws EntityNotFoundException, ResourceInUseException {
         Optional<VoteEntity> vote = voteRepository.findById(voteId);
         if (vote.isEmpty())
-        {
             throw new EntityNotFoundException();
-        }
 
         VoteEntity returnVote = vote.get();
         returnVote.setVoteValue(voteValue);

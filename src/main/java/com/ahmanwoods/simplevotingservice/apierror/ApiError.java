@@ -11,6 +11,12 @@ public class ApiError {
         timestamp = LocalDateTime.now();
     }
 
+    public ApiError(int status, String error) {
+        this.status = status;
+        this.error = error;
+        this.timestamp = LocalDateTime.now();
+    }
+
     public ApiError(int status) {
         this.status = status;
     }
@@ -37,10 +43,5 @@ public class ApiError {
 
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
-    }
-
-    public ApiError(int status, String error) {
-        this.status = status;
-        this.error = error;
     }
 }

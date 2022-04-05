@@ -10,9 +10,7 @@ public class QuestionEntity {
     private String id;
     private String question;
 
-    public QuestionEntity() {
-
-    }
+    public QuestionEntity() {}
 
     public QuestionEntity(String id, String question) {
         this.id = id;

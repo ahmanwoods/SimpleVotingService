@@ -58,6 +58,7 @@ public class VoteController {
         resData.put("no_votes", noVotes);
         resData.put("no_percentage", noPercentage);
 
+        // Manually building JSON to avoid extraneous import for onetime functionality.
         String resJson = "{" + resData.entrySet().stream()
                 .map(mapEntry -> String.format("\"%s\": \"%s\"", mapEntry.getKey(), mapEntry.getValue()))
                 .collect(Collectors.joining(", ")) + "}";

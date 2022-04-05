@@ -14,10 +14,9 @@ public class ResourceInUseExceptionHandler {
     @ResponseBody
     public ApiError handleUsernameInUseException(ResourceInUseException ex)
     {
-        ApiError apiError = new ApiError();
-        apiError.setStatus(HttpStatus.CONFLICT.value());
-        apiError.setError("The requested resource is already in use");
-        return apiError;
+        return new ApiError(
+                HttpStatus.CONFLICT.value(),
+                "The requested resource is already in use");
     }
 }
 

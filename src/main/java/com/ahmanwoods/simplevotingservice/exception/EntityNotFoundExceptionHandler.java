@@ -14,10 +14,9 @@ public class EntityNotFoundExceptionHandler {
     @ResponseBody
     public ApiError handleEntityNotFoundException(EntityNotFoundException ex)
     {
-        ApiError apiError = new ApiError();
-        apiError.setStatus(HttpStatus.NOT_FOUND.value());
-        apiError.setError("The requested value was not found");
-        return apiError;
+        return new ApiError(
+                HttpStatus.CONFLICT.value(),
+                "The requested value was not found.");
     }
 }
 

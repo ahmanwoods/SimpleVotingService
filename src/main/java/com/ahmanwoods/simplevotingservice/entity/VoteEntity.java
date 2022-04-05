@@ -15,9 +15,7 @@ public class VoteEntity {
     private UserEntity user;
     private int voteValue;
 
-    public VoteEntity() {
-
-    }
+    public VoteEntity() {}
 
     public VoteEntity(String id, String questionId, String userId, int voteValue) {
         this.id = id;
