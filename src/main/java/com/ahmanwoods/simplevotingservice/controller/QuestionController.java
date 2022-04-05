@@ -11,6 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/questions")
@@ -24,6 +25,12 @@ public class QuestionController {
     public ResponseEntity<Void> addQuestion(@Valid @RequestBody AddQuestionForm addQuestionForm) {
         QuestionEntity createdQuestion = questionService.addQuestion(addQuestionForm.getQuestion());
         return new ResponseEntity<Void>(HttpStatus.CREATED);
+    }
+
+    @RequestMapping(method=RequestMethod.GET, value="/getUserUnanswered")
+    public ResponseEntity<List<QuestionEntity>> getQuestion(@Valid @RequestBody GetUserUnansweredForm getUserUnansweredForm) {
+        List<QuestionEntity> questions = questionService.getUserUnanswered(getUserUnansweredForm.getUser());
+        return new ResponseEntity<List<QuestionEntity>>(questions, HttpStatus.OK);
     }
 
     @RequestMapping(method=RequestMethod.GET, value="/get")

@@ -13,17 +13,17 @@ public class VoteEntity {
     private QuestionEntity question;
     @OneToOne
     private UserEntity user;
-    private int vote;
+    private int voteValue;
 
     public VoteEntity() {
 
     }
 
-    public VoteEntity(String id, QuestionEntity question, UserEntity user, int vote) {
+    public VoteEntity(String id, String questionId, String userId, int voteValue) {
         this.id = id;
-        this.question = question;
-        this.user = user;
-        this.vote = vote;
+        this.question = new QuestionEntity(questionId, "");
+        this.user = new UserEntity(userId, "");
+        this.voteValue = voteValue;
     }
 
     public String getId() {
@@ -50,11 +50,11 @@ public class VoteEntity {
         this.user = user;
     }
 
-    public int getVote() {
-        return vote;
+    public int getVoteValue() {
+        return voteValue;
     }
 
-    public void setVote(int vote) {
-        this.vote = vote;
+    public void setVoteValue(int vote) {
+        this.voteValue = vote;
     }
 }

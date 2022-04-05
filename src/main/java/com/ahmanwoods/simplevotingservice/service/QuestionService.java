@@ -6,13 +6,16 @@ import com.ahmanwoods.simplevotingservice.exception.ResourceInUseException;
 import com.ahmanwoods.simplevotingservice.exception.EntityNotFoundException;
 import com.ahmanwoods.simplevotingservice.repository.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import static org.springframework.core.io.buffer.DataBufferUtils.matcher;
 
@@ -21,6 +24,8 @@ public class QuestionService {
 
     @Autowired
     private QuestionRepository questionRepository;
+    @Autowired
+    private VoteService voteService;
     private final static Pattern UUID_REGEX = Pattern.compile("^[{]?[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}[}]?$");
 
 
@@ -72,6 +77,14 @@ public class QuestionService {
 
         QuestionEntity returnQuestion = question.get();
         return returnQuestion;
+    }
+
+    @Transactional(noRollbackFor = EntityNotFoundException.class)
+    public List<QuestionEntity> getUserUnanswered(String userId) throws EntityNotFoundException {
+        List<QuestionEntity> questions = Streamable.of(questionRepository.findAll()).toList();
+        List<String> userVotes = voteService.getUserVotes(userId);
+
+        return questions.stream().filter(q -> !userVotes.contains(q.getId())).toList();
     }
 
 
